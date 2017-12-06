@@ -3,6 +3,7 @@ package org.biacode.jleadboxer
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.getAs
+import org.biacode.jleadboxer.LeadBoxerConf.setupFuel
 import org.biacode.jleadboxer.client.JLeadBoxerClient
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper
 import org.biacode.jleadboxer.model.dataset.CreateDatasetModel
@@ -26,6 +27,11 @@ object LeadBoxerConf {
     val accountId = UUID.randomUUID().toString()
     val userEmail = "foo@bar.com"
     val basePath = "https://kibana.leadboxer.com/api"
+
+    fun setupFuel() {
+        FuelManager.instance.basePath = LeadBoxerConf.basePath
+        FuelManager.instance.baseHeaders = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON)
+    }
 }
 
 class TestKotlinApplication {
@@ -59,9 +65,32 @@ class TestKotlinApplication {
         })
     }
 
-    private fun setupFuel() {
-        FuelManager.instance.basePath = LeadBoxerConf.basePath
-        FuelManager.instance.baseHeaders = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON)
-    }
+}
 
+fun main(args: Array<String>) {
+    setupFuel()
+    JLeadBoxerClient.dataset.createDataset(CreateDatasetModel(
+            apiKey = LeadBoxerConf.apiKey,
+            email = LeadBoxerConf.userEmail,
+            accountId = LeadBoxerConf.accountId,
+            timezone = "Europe/Amsterdam",
+            userIds = setOf(3839)
+    ), { request, response, result ->
+        logger.debug("createDataset request - {}", request)
+        logger.debug("createDataset response - {}", response)
+        logger.debug("createDataset result - {}", result)
+        logger.debug("createDataset cURL - {}", request.cUrlString())
+        when (result) {
+            is Result.Failure -> {
+                val error = result.getAs<String>()
+                logger.error("createDataset - {}", error)
+            }
+            is Result.Success -> {
+                val data = result.getAs<String>()
+                logger.info("createDataset data - {}", data)
+                val resultMap = ResourceClientHelper.convertToMap(data)
+                logger.info("createDataset map - {}", resultMap)
+            }
+        }
+    })
 }
