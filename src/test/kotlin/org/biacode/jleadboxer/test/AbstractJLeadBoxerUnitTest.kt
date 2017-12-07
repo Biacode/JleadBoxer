@@ -1,6 +1,7 @@
 package org.biacode.jleadboxer.test
 
 import com.github.kittinunf.fuel.core.FuelManager
+import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.setupFuel
 import org.easymock.EasyMockRunner
 import org.easymock.EasyMockSupport
 import org.junit.Before
@@ -23,11 +24,15 @@ abstract class AbstractJLeadBoxerUnitTest : EasyMockSupport() {
         val accountId = UUID.randomUUID().toString()
         val userEmail = UUID.randomUUID().toString()
         val basePath = "https://kibana.leadboxer.com/api"
+
+        fun setupFuel() {
+            FuelManager.instance.basePath = LeadBoxerCredentials.basePath
+            FuelManager.instance.baseHeaders = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON)
+        }
     }
 
     @Before
-    fun setupFuel() {
-        FuelManager.instance.basePath = LeadBoxerCredentials.basePath
-        FuelManager.instance.baseHeaders = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON)
+    fun before() {
+        setupFuel()
     }
 }

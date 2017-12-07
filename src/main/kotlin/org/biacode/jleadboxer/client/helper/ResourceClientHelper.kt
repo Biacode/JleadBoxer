@@ -1,9 +1,6 @@
 package org.biacode.jleadboxer.client.helper
 
-import com.fasterxml.jackson.core.type.TypeReference
-import com.github.kittinunf.fuel.core.ResponseDeserializable
-import com.github.kittinunf.fuel.jackson.mapper
-import java.util.*
+import com.google.gson.Gson
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -14,22 +11,9 @@ import kotlin.reflect.KProperty
  */
 object ResourceClientHelper {
 
-    //region Json helpers
-    fun convertToMap(data: String?): HashMap<String, Any> {
-        val typeRef = object : TypeReference<HashMap<String, Any>>() {}
-        return mapper.readValue<HashMap<String, Any>>(data, typeRef)
-    }
-
-    fun convertToJson(theMap: Map<String, Any?>): String {
-        return mapper.writeValueAsString(theMap)
-    }
-    //endregion
-
-    //region Fuel deserializer
-    class JacksonFuelDeserializer<out T : Any> : ResponseDeserializable<T> {
-        override fun deserialize(bytes: ByteArray): T? {
-            return mapper.readValue(bytes, object : TypeReference<T>() {})
-        }
+    //region Deserialization helpers
+    fun convertToJson(entity: Any?): String {
+        return Gson().toJson(entity)
     }
     //endregion
 

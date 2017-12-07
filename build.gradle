@@ -35,7 +35,7 @@ dependencies {
     compile "joda-time:joda-time:$joda_time_version"
     compile "org.slf4j:slf4j-api:$slf4j_version"
     compile "com.github.kittinunf.fuel:fuel:1.12.0"
-    compile "com.github.kittinunf.fuel:fuel-jackson:1.12.0"
+    compile "com.github.kittinunf.fuel:fuel-gson:1.12.0"
     testCompile "junit:junit:$junit_version"
     testCompile "org.easymock:easymock:$easymock_version"
     testCompile "org.slf4j:slf4j-simple:$slf4j_version"
