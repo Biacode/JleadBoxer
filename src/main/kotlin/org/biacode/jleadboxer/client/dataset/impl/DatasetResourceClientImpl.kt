@@ -19,31 +19,33 @@ import org.biacode.jleadboxer.model.dataset.CreateDatasetResponse
 class DatasetResourceClientImpl : DatasetResourceClient {
 
     //region Public methods
-    override fun createDataset(request: CreateDatasetRequest,
-                               handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit,
-                               deserializer: ResponseDeserializable<CreateDatasetResponse>): Request {
-        return performCreateDataset(request, handler, deserializer)
-    }
+    override fun createDataset(
+            request: CreateDatasetRequest,
+            handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit,
+            deserializer: ResponseDeserializable<CreateDatasetResponse>
+    ) = performCreateDataset(request, handler, deserializer)
 
-    override fun createDataset(request: CreateDatasetRequest, handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit): Request {
-        return performCreateDataset(request, handler, ResourceClientHelper.JacksonFuelDeserializer())
-    }
+    override fun createDataset(
+            request: CreateDatasetRequest,
+            handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit
+    ) = performCreateDataset(request, handler, ResourceClientHelper.JacksonFuelDeserializer())
     //endregion
 
     //region Utility methods
-    private fun performCreateDataset(request: CreateDatasetRequest,
-                                     handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit,
-                                     deserializer: ResponseDeserializable<CreateDatasetResponse>
-    ): Request = "/datasets?apiKey=${request.apiKey}&email=${request.email}"
+    private fun performCreateDataset(
+            request: CreateDatasetRequest,
+            handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit,
+            deserializer: ResponseDeserializable<CreateDatasetResponse>
+    ) = "/datasets?apiKey=${request.apiKey}&email=${request.email}"
             .httpPost()
-            .body(ResourceClientHelper.convertToJson(mapOf("dataset" to mapOf(
+            .body(ResourceClientHelper.convertToJson(mapOf(
                     "accountId" to request.accountId,
                     "datasetId" to request.datasetId,
                     "humanName" to request.humanName,
                     "sendEmail" to request.sendEmail,
                     "timezone" to request.timezone,
                     "userIds" to request.userIds
-            ))))
+            )))
             .responseObject(deserializer, handler)
     //endregion
 }

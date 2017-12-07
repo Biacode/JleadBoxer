@@ -20,7 +20,7 @@ object ResourceClientHelper {
         return mapper.readValue<HashMap<String, Any>>(data, typeRef)
     }
 
-    fun convertToJson(theMap: Map<String, Any>): String {
+    fun convertToJson(theMap: Map<String, Any?>): String {
         return mapper.writeValueAsString(theMap)
     }
     //endregion
