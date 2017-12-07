@@ -1,5 +1,6 @@
 package org.biacode.jleadboxer.model.dataset
 
+import org.biacode.jleadboxer.model.common.CommonJLeadBoxerResponse
 import java.util.*
 
 /**
@@ -19,7 +20,5 @@ data class CreateDatasetRequest(
 )
 
 data class CreateDatasetResponse(
-        val datasetId: String,
-        val responseCode: Int,
-        val responseMessage: String
-)
+        val datasetId: String
+) : CommonJLeadBoxerResponse()

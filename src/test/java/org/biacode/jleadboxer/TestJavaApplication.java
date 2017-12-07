@@ -18,7 +18,7 @@ import java.util.UUID;
 public class TestJavaApplication extends AbstractJLeadBoxerUnitTest {
     @Test
     public void testDataset() {
-        JLeadBoxerClient.INSTANCE.getDataset().createDataset(new CreateDatasetRequest(
+        JLeadBoxerClient.INSTANCE.getDataset().create(new CreateDatasetRequest(
                 LeadBoxerCredentials.INSTANCE.getApiKey(),
                 LeadBoxerCredentials.INSTANCE.getUserEmail(),
                 LeadBoxerCredentials.INSTANCE.getAccountId(),
