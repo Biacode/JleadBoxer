@@ -1,14 +1,17 @@
 package org.biacode.jleadboxer;
 
+import com.github.kittinunf.fuel.core.Request;
 import kotlin.Unit;
 import org.biacode.jleadboxer.client.JLeadBoxerClient;
+import org.biacode.jleadboxer.client.helper.ResourceClientHelper;
 import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest;
+import org.biacode.jleadboxer.model.dataset.DeleteDatasetRequest;
+import org.biacode.jleadboxer.model.dataset.DeleteDatasetResponse;
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest;
 import org.junit.Test;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.UUID;
 
 /**
  * Created by Arthur Asatryan.
@@ -17,19 +20,34 @@ import java.util.UUID;
  */
 public class TestJavaApplication extends AbstractJLeadBoxerUnitTest {
     @Test
-    public void testDataset() {
-        JLeadBoxerClient.INSTANCE.getDataset().create(new CreateDatasetRequest(
-                LeadBoxerCredentials.INSTANCE.getApiKey(),
-                LeadBoxerCredentials.INSTANCE.getUserEmail(),
-                LeadBoxerCredentials.INSTANCE.getAccountId(),
-                UUID.randomUUID().toString(),
-                UUID.randomUUID().toString(),
-                false,
-                "Europe/Amsterdam",
-                new HashSet<>(Collections.singletonList(3839))
-        ), (request, response, result) -> {
-            System.out.println(result);
-            return Unit.INSTANCE;
-        });
+    public void testCreateDataset() {
+        JLeadBoxerClient.INSTANCE.getDataset().create(
+                new CreateDatasetRequest(
+                        "api-key",
+                        "user-email",
+                        "account-id",
+                        "Europe/Amsterdam",
+                        new HashSet<>(Collections.singletonList(3839))
+                ),
+                ResourceClientHelper.INSTANCE.ignoreHandling());
+    }
+
+    @Test
+    public void testDeleteDataset() {
+        final Request delete = JLeadBoxerClient.INSTANCE.getDataset().delete(
+                new DeleteDatasetRequest(
+                        "dataset-id",
+                        "user-email",
+                        "api-key"
+                ), ((request, response, deleteDatasetResponseFuelErrorResult) -> {
+                    deleteDatasetResponseFuelErrorResult.get().getResponseMessage();
+                    return Unit.INSTANCE;
+                })
+        );
+        delete
+                .responseObject(ResourceClientHelper.INSTANCE.<DeleteDatasetResponse>deserializer())
+                .getThird()
+                .get()
+                .getResponseMessage();
     }
 }

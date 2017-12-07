@@ -1,10 +1,12 @@
 package org.biacode.jleadboxer
 
+import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.getAs
 import org.biacode.jleadboxer.client.JLeadBoxerClient
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper
 import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest
+import org.biacode.jleadboxer.model.dataset.CreateDatasetResponse
 import org.biacode.jleadboxer.model.dataset.DeleteDatasetRequest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials
@@ -81,7 +83,7 @@ private fun deleteDataset() {
 }
 
 private fun createDataset() {
-    JLeadBoxerClient.dataset.create(CreateDatasetRequest(
+    val create = JLeadBoxerClient.dataset.create(CreateDatasetRequest(
             apiKey = LeadBoxerCredentials.apiKey,
             email = LeadBoxerCredentials.userEmail,
             accountId = LeadBoxerCredentials.accountId,
@@ -99,4 +101,6 @@ private fun createDataset() {
             }
         }
     })
+    val (a, b, c) = create.responseObject<CreateDatasetResponse>();
+
 }

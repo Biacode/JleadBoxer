@@ -8,7 +8,7 @@ import java.util.*
  * Date: 12/6/17
  * Time: 4:01 PM
  */
-data class CreateDatasetRequest(
+data class CreateDatasetRequest @JvmOverloads constructor(
         val apiKey: String,
         val email: String,
         val accountId: String,
