@@ -1,7 +1,8 @@
 package org.biacode.jleadboxer;
 
 import org.biacode.jleadboxer.client.JLeadBoxerClient;
-import org.biacode.jleadboxer.model.dataset.CreateDatasetModel;
+import org.biacode.jleadboxer.client.helper.ResourceClientHelper;
+import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -17,7 +18,7 @@ public class TestJavaApplication {
     @Test
     public void testDataset() {
         LeadBoxerConf.INSTANCE.setupFuel();
-        JLeadBoxerClient.INSTANCE.getDataset().createDataset(new CreateDatasetModel(
+        JLeadBoxerClient.INSTANCE.getDataset().createDataset(new CreateDatasetRequest(
                 LeadBoxerConf.INSTANCE.getApiKey(),
                 LeadBoxerConf.INSTANCE.getUserEmail(),
                 LeadBoxerConf.INSTANCE.getAccountId(),
@@ -26,6 +27,6 @@ public class TestJavaApplication {
                 false,
                 "Europe/Amsterdam",
                 new HashSet<>(Collections.singletonList(3839))
-        ), (request, response, result) -> null);
+        ), (request, response, result) -> null, new ResourceClientHelper.JacksonFuelDeserializer<>());
     }
 }

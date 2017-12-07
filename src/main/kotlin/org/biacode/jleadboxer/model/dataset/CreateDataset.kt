@@ -7,7 +7,7 @@ import java.util.*
  * Date: 12/6/17
  * Time: 4:01 PM
  */
-data class CreateDatasetModel(
+data class CreateDatasetRequest(
         val apiKey: String,
         val email: String,
         val accountId: String,
@@ -16,4 +16,10 @@ data class CreateDatasetModel(
         val sendEmail: Boolean? = null,
         val timezone: String = "Europe/Amsterdam",
         val userIds: Set<Int>
+)
+
+data class CreateDatasetResponse(
+        val datasetId: String,
+        val responseCode: Int,
+        val responseMessage: String
 )

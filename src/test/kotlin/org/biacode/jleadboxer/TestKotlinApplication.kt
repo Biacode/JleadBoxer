@@ -6,7 +6,7 @@ import com.github.kittinunf.result.getAs
 import org.biacode.jleadboxer.LeadBoxerConf.setupFuel
 import org.biacode.jleadboxer.client.JLeadBoxerClient
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper
-import org.biacode.jleadboxer.model.dataset.CreateDatasetModel
+import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest
 import org.junit.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -25,7 +25,7 @@ object LeadBoxerConf {
     val apiKey = UUID.randomUUID().toString()
     val datasetId = UUID.randomUUID().toString()
     val accountId = UUID.randomUUID().toString()
-    val userEmail = "foo@bar.com"
+    val userEmail = UUID.randomUUID().toString()
     val basePath = "https://kibana.leadboxer.com/api"
 
     fun setupFuel() {
@@ -39,7 +39,7 @@ class TestKotlinApplication {
     @Test
     fun testDataset() {
         setupFuel()
-        JLeadBoxerClient.dataset.createDataset(CreateDatasetModel(
+        JLeadBoxerClient.dataset.createDataset(CreateDatasetRequest(
                 apiKey = LeadBoxerConf.apiKey,
                 email = LeadBoxerConf.userEmail,
                 accountId = LeadBoxerConf.accountId,
@@ -69,7 +69,7 @@ class TestKotlinApplication {
 
 fun main(args: Array<String>) {
     setupFuel()
-    JLeadBoxerClient.dataset.createDataset(CreateDatasetModel(
+    JLeadBoxerClient.dataset.createDataset(CreateDatasetRequest(
             apiKey = LeadBoxerConf.apiKey,
             email = LeadBoxerConf.userEmail,
             accountId = LeadBoxerConf.accountId,
