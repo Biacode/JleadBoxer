@@ -6,7 +6,6 @@ import org.biacode.jleadboxer.client.JLeadBoxerClient;
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper;
 import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest;
 import org.biacode.jleadboxer.model.dataset.DeleteDatasetRequest;
-import org.biacode.jleadboxer.model.dataset.DeleteDatasetResponse;
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest;
 import org.junit.Test;
 
@@ -44,10 +43,5 @@ public class TestJavaApplication extends AbstractJLeadBoxerUnitTest {
                     return Unit.INSTANCE;
                 })
         );
-        delete
-                .responseObject(ResourceClientHelper.INSTANCE.<DeleteDatasetResponse>deserializer())
-                .getThird()
-                .get()
-                .getResponseMessage();
     }
 }
