@@ -6,4 +6,5 @@ package org.biacode.jleadboxer.client.leadboard
  * Time: 6:11 PM
  */
 interface LeadBoardResourceClient {
+
 }

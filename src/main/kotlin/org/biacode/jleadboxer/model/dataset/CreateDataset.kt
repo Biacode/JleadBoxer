@@ -11,12 +11,10 @@ import java.util.*
 data class CreateDatasetRequest @JvmOverloads constructor(
         val apiKey: String,
         val email: String,
-        val accountId: String,
-        val datasetId: String = UUID.randomUUID().toString(),
         val humanName: String = UUID.randomUUID().toString(),
         val sendEmail: Boolean? = null,
         val timezone: String = "Europe/Amsterdam",
-        val userIds: Set<Int>
+        val userIds: Set<Int> = emptySet()
 )
 
 data class CreateDatasetResponse(

@@ -6,13 +6,11 @@ import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpDelete
 import com.github.kittinunf.fuel.httpPost
+import com.github.kittinunf.fuel.httpPut
 import com.github.kittinunf.result.Result
 import org.biacode.jleadboxer.client.dataset.DatasetResourceClient
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper.convertToJson
-import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest
-import org.biacode.jleadboxer.model.dataset.CreateDatasetResponse
-import org.biacode.jleadboxer.model.dataset.DeleteDatasetRequest
-import org.biacode.jleadboxer.model.dataset.DeleteDatasetResponse
+import org.biacode.jleadboxer.model.dataset.*
 
 /**
  * Created by Arthur Asatryan.
@@ -27,13 +25,18 @@ class DatasetResourceClientImpl : DatasetResourceClient {
             handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit
     ) = "/datasets?apiKey=${request.apiKey}&email=${request.email}".httpPost()
             .body(convertToJson(mapOf(
-                    "accountId" to request.accountId,
-                    "datasetId" to request.datasetId,
                     "humanName" to request.humanName,
                     "sendEmail" to request.sendEmail,
                     "timezone" to request.timezone,
                     "userIds" to request.userIds
             )))
+            .responseObject(handler)
+
+    override fun update(
+            request: UpdateDatasetRequest,
+            handler: (Request, Response, Result<UpdateDatasetResponse, FuelError>) -> Unit
+    ) = "/datasets/${request.datasetId}/name?humanName=${request.humanName}&email=${request.email}&apiKey=${request.apiKey}"
+            .httpPut()
             .responseObject(handler)
 
     override fun delete(

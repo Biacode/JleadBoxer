@@ -4,10 +4,7 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.result.Result
-import org.biacode.jleadboxer.model.dataset.CreateDatasetRequest
-import org.biacode.jleadboxer.model.dataset.CreateDatasetResponse
-import org.biacode.jleadboxer.model.dataset.DeleteDatasetRequest
-import org.biacode.jleadboxer.model.dataset.DeleteDatasetResponse
+import org.biacode.jleadboxer.model.dataset.*
 
 /**
  * Created by Arthur Asatryan.
@@ -24,6 +21,12 @@ interface DatasetResourceClient {
     fun delete(
             request: DeleteDatasetRequest,
             handler: (Request, Response, Result<DeleteDatasetResponse, FuelError>) -> Unit
+            = { _, _, _ -> }
+    ): Request
+
+    fun update(
+            request: UpdateDatasetRequest,
+            handler: (Request, Response, Result<UpdateDatasetResponse, FuelError>) -> Unit
             = { _, _, _ -> }
     ): Request
 }
