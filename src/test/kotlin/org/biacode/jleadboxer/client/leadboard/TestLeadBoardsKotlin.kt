@@ -3,6 +3,7 @@ package org.biacode.jleadboxer.client.leadboard
 import com.github.kittinunf.result.Result
 import org.biacode.jleadboxer.client.JLeadBoxerClient
 import org.biacode.jleadboxer.model.leadboard.GetLeadsRequest
+import org.biacode.jleadboxer.model.leadboard.GetSessionsRequest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.setupFuel
@@ -27,10 +28,34 @@ class TestLeadBoardsKotlin : AbstractJLeadBoxerUnitTest() {
 
 fun main(args: Array<String>) {
     setupFuel()
+    getLeads()
+    getSessions("1505135787782.1263221347")
+}
+
+private fun getLeads() {
     JLeadBoxerClient
             .leadBoard
             .getLeads(
                     GetLeadsRequest.build(LeadBoxerCredentials.apiKey, LeadBoxerCredentials.datasetId) {},
+                    { request, _, result ->
+                        logger.info("getLeads cURL - {}", request.cUrlString())
+                        when (result) {
+                            is Result.Failure -> {
+                                logger.error("getLeads - {}", result.error)
+                            }
+                            is Result.Success -> {
+                                logger.info("getLeads - {}", result.value)
+                            }
+                        }
+                    }
+            )
+}
+
+private fun getSessions(leadId: String) {
+    JLeadBoxerClient
+            .leadBoard
+            .getSessions(
+                    GetSessionsRequest(leadId),
                     { request, _, result ->
                         logger.info("getLeads cURL - {}", request.cUrlString())
                         when (result) {

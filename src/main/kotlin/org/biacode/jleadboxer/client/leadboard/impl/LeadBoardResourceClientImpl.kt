@@ -3,15 +3,14 @@ package org.biacode.jleadboxer.client.leadboard.impl
 import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
-import com.github.kittinunf.fuel.core.ResponseDeserializable
+import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.biacode.jleadboxer.client.leadboard.LeadBoardResourceClient
 import org.biacode.jleadboxer.model.leadboard.GetLeadsRequest
 import org.biacode.jleadboxer.model.leadboard.GetLeadsResponse
-import java.io.Reader
+import org.biacode.jleadboxer.model.leadboard.GetSessionsRequest
+import org.biacode.jleadboxer.model.leadboard.GetSessionsResponse
 
 /**
  * Created by Arthur Asatryan.
@@ -54,10 +53,11 @@ class LeadBoardResourceClientImpl : LeadBoardResourceClient {
             "variant" to request.variant,
             "ignoreLocale" to request.ignoreLocale,
             "dateFormat" to request.dateFormat
-    )).responseObject(object : ResponseDeserializable<GetLeadsResponse> {
-        override fun deserialize(reader: Reader): GetLeadsResponse? {
-            return Gson().fromJson(reader, object : TypeToken<GetLeadsResponse>() {}.type)
-        }
-    }, handler)
+    )).responseObject(handler)
+
+    override fun getSessions(
+            request: GetSessionsRequest,
+            handler: (Request, Response, Result<GetSessionsResponse, FuelError>) -> Unit
+    ) = "/leads/sessions".httpGet(listOf("leadId" to request.leadId, "limit" to request.limit)).responseObject(handler)
     //endregion
 }
