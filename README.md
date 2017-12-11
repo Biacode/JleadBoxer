@@ -37,8 +37,13 @@
 ### Gradle
 
 ```groovy
-maven {
-  url "https://oss.sonatype.org/content/repositories/snapshots"
+
+repositories {
+    mavenCentral()
+    maven {
+      url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    jcenter()
 }
 
 compile "org.biacode.jleadboxer:jleadboxer:0.0.1-SNAPSHOT"
