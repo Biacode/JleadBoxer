@@ -12,6 +12,19 @@
     <releases><enabled>false</enabled></releases>
     <snapshots><enabled>true</enabled></snapshots>
   </repository>
+  <repository>
+      <id>jcenter</id>
+      <url>http://jcenter.bintray.com </url>
+      <snapshots>
+          <enabled>true</enabled>
+          <updatePolicy>never</updatePolicy>
+          <checksumPolicy>warn</checksumPolicy>
+      </snapshots>
+      <releases>
+          <enabled>true</enabled>
+          <checksumPolicy>warn</checksumPolicy>
+      </releases>
+  </repository>
 </repositories>
 
 <dependency>
