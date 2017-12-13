@@ -5,7 +5,6 @@ import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.github.kittinunf.result.Result
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import java.io.Reader
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
@@ -26,11 +25,11 @@ object ResourceClientHelper {
         return Gson().toJson(entity)
     }
 
-    fun <T : Any> deserializer(): ResponseDeserializable<T> = JLeadBoxerJsonDeserializer()
+    fun <T : Any> deserializer(clazz: Class<T>): ResponseDeserializable<T> = JLeadBoxerJsonDeserializer(clazz)
 
-    private class JLeadBoxerJsonDeserializer<out T : Any> : ResponseDeserializable<T> {
+    private class JLeadBoxerJsonDeserializer<out T : Any>(private val clazz: Class<T>) : ResponseDeserializable<T> {
         override fun deserialize(reader: Reader): T? {
-            return Gson().fromJson(reader, object : TypeToken<T>() {}.type)
+            return Gson().fromJson(reader, clazz)
         }
     }
     //endregion
