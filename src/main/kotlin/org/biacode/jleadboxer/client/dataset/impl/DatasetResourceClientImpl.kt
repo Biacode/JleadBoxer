@@ -20,7 +20,7 @@ import org.biacode.jleadboxer.model.dataset.*
 class DatasetResourceClientImpl : DatasetResourceClient {
 
     //region Public methods
-    override fun create(
+    override fun createAsync(
             request: CreateDatasetRequest,
             handler: (Request, Response, Result<CreateDatasetResponse, FuelError>) -> Unit
     ) = "/datasets?apiKey=${request.apiKey}&email=${request.email}".httpPost()
@@ -32,19 +32,37 @@ class DatasetResourceClientImpl : DatasetResourceClient {
             )))
             .responseObject(handler)
 
-    override fun update(
+    override fun createSync(request: CreateDatasetRequest) = "/datasets?apiKey=${request.apiKey}&email=${request.email}".httpPost()
+            .body(convertToJson(mapOf(
+                    "humanName" to request.humanName,
+                    "sendEmail" to request.sendEmail,
+                    "timezone" to request.timezone,
+                    "userIds" to request.userIds
+            )))
+            .responseObject<CreateDatasetResponse>().third.get()
+
+    override fun updateAsync(
             request: UpdateDatasetRequest,
             handler: (Request, Response, Result<UpdateDatasetResponse, FuelError>) -> Unit
     ) = "/datasets/${request.datasetId}/name?humanName=${request.humanName}&email=${request.email}&apiKey=${request.apiKey}"
             .httpPut()
             .responseObject(handler)
 
-    override fun delete(
+    override fun updateSync(request: UpdateDatasetRequest) = "/datasets/${request.datasetId}/name?humanName=${request.humanName}&email=${request.email}&apiKey=${request.apiKey}"
+            .httpPut()
+            .responseObject<UpdateDatasetResponse>().third.get()
+
+    override fun deleteAsync(
             request: DeleteDatasetRequest,
             handler: (Request, Response, Result<DeleteDatasetResponse, FuelError>) -> Unit
     ) = "/datasets/${request.datasetId}".httpDelete(listOf(
             "apiKey" to request.apiKey,
             "email" to request.email
     )).responseObject(handler)
+
+    override fun deleteSync(request: DeleteDatasetRequest) = "/datasets/${request.datasetId}".httpDelete(listOf(
+            "apiKey" to request.apiKey,
+            "email" to request.email
+    )).responseObject<DeleteDatasetResponse>().third.get()
     //endregion
 }

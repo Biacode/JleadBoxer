@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
 private fun getLeads() {
     JLeadBoxerClient
             .leadBoard
-            .getLeads(
+            .getLeadsAsync(
                     GetLeadsRequest.build(LeadBoxerCredentials.apiKey, LeadBoxerCredentials.datasetId) {},
                     { request, _, result ->
                         logger.info("getLeads cURL - {}", request.cUrlString())
@@ -52,7 +52,7 @@ private fun getLeads() {
 private fun getSessions(leadId: String) {
     JLeadBoxerClient
             .leadBoard
-            .getSessions(
+            .getSessionsAsync(
                     GetSessionsRequest(leadId),
                     { request, _, result ->
                         logger.info("getLeads cURL - {}", request.cUrlString())

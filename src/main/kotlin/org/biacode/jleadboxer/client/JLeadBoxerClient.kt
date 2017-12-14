@@ -1,6 +1,5 @@
 package org.biacode.jleadboxer.client
 
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import org.biacode.jleadboxer.client.dataset.impl.DatasetResourceClientImpl
 import org.biacode.jleadboxer.client.helper.ResourceClientHelper.readWriteLazy
@@ -28,7 +27,7 @@ object JLeadBoxerClient {
     val userDataset by readWriteLazy { UserDatasetResourceClientImpl() }
 
     init {
-        Fuel.regularMode()
+//        Fuel.regularMode()
         FuelManager.instance.basePath = "https://kibana.leadboxer.com/api"
         FuelManager.instance.baseHeaders = mapOf(HttpHeaders.CONTENT_TYPE to MediaType.APPLICATION_JSON)
     }

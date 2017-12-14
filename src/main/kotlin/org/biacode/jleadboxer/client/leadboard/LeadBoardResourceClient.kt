@@ -15,15 +15,19 @@ import org.biacode.jleadboxer.model.leadboard.GetSessionsResponse
  * Time: 6:11 PM
  */
 interface LeadBoardResourceClient {
-    fun getLeads(
+    fun getLeadsAsync(
             request: GetLeadsRequest,
             handler: (Request, Response, Result<GetLeadsResponse, FuelError>) -> Unit
             = { _, _, _ -> }
     ): Request
 
-    fun getSessions(
+    fun getLeadsSync(request: GetLeadsRequest): GetLeadsResponse
+
+    fun getSessionsAsync(
             request: GetSessionsRequest,
             handler: (Request, Response, Result<GetSessionsResponse, FuelError>) -> Unit
             = { _, _, _ -> }
     ): Request
+
+    fun getSessionsSync(request: GetSessionsRequest): GetSessionsResponse
 }

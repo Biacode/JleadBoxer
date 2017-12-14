@@ -28,31 +28,37 @@ class TestKotlinApplication : AbstractJLeadBoxerUnitTest() {
 }
 
 fun main(args: Array<String>) {
-    val datasetId = createDataset()
+    val datasetId = createDatasetSync()
     updateDataset(datasetId)
     deleteDataset(datasetId)
 }
 
-private fun createDataset(): String {
-    return JLeadBoxerClient.dataset.create(CreateDatasetRequest(
+private fun createDatasetAsync() {
+    JLeadBoxerClient.dataset.createAsync(CreateDatasetRequest(
             apiKey = LeadBoxerCredentials.apiKey,
             email = LeadBoxerCredentials.userEmail
     ), { request, _, result ->
-        logger.info("createDataset cURL - {}", request.cUrlString())
+        logger.info("createDatasetAsync cURL - {}", request.cUrlString())
         when (result) {
             is Result.Failure -> {
-                logger.error("createDataset - {}", result.error)
+                logger.error("createDatasetAsync - {}", result.error)
             }
             is Result.Success -> {
-                logger.info("createDataset data - {}", result)
-                logger.info("createDataset map - {}", result.value)
+                logger.info("createDatasetAsync data - {}", result)
+                logger.info("createDatasetAsync map - {}", result.value)
             }
         }
-    }).responseObject<CreateDatasetResponse>().third.get().datasetId
+    })
+}
+
+private fun createDatasetSync(): String {
+    return JLeadBoxerClient.dataset
+            .createAsync(CreateDatasetRequest(apiKey = LeadBoxerCredentials.apiKey, email = LeadBoxerCredentials.userEmail))
+            .responseObject<CreateDatasetResponse>().third.get().datasetId
 }
 
 private fun updateDataset(datasetId: String): String {
-    return JLeadBoxerClient.dataset.update(
+    return JLeadBoxerClient.dataset.updateAsync(
             UpdateDatasetRequest(
                     "updated human name ${UUID.randomUUID()}",
                     datasetId,
@@ -74,7 +80,7 @@ private fun updateDataset(datasetId: String): String {
 }
 
 private fun deleteDataset(datasetId: String): String {
-    return JLeadBoxerClient.dataset.delete(
+    return JLeadBoxerClient.dataset.deleteAsync(
             DeleteDatasetRequest(
                     datasetId,
                     LeadBoxerCredentials.userEmail,

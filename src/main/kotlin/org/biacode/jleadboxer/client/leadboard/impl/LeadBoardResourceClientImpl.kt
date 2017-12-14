@@ -20,44 +20,62 @@ import org.biacode.jleadboxer.model.leadboard.GetSessionsResponse
 class LeadBoardResourceClientImpl : LeadBoardResourceClient {
 
     //region Public methods
-    override fun getLeads(
+    override fun getLeadsAsync(
             request: GetLeadsRequest,
             handler: (Request, Response, Result<GetLeadsResponse, FuelError>) -> Unit
-    ) = "/views/c_view_leads".httpGet(listOf(
-            "apiKey" to request.apiKey,
-            "site" to request.site,
-            "search" to request.search,
-            "limit" to request.limit,
-            "locale" to request.locale,
-            "nextToken" to request.nextToken,
-            "criteriaTextFilter" to request.criteriaTextFilter,
-            "criteriaNumberFilter" to request.criteriaNumberFilter,
-            "criteriaTimeFilter" to request.criteriaTimeFilter,
-            "criteriaFieldFilter" to request.criteriaFieldFilter,
-            "criteriaExitLinkFilter" to request.criteriaExitLinkFilter,
-            "usePresetExclusionList" to request.usePresetExclusionList,
-            "usePresetInclusionList" to request.usePresetInclusionList,
-            "showColumns" to request.showColumns,
-            "email" to request.email,
-            "login" to request.login,
-            "period" to request.period,
-            "noShortenEmail" to request.noShortenEmail,
-            "date" to request.date,
-            "unixTime" to request.unixTime,
-            "sortBy" to request.sortBy,
-            "showLeadList" to request.showLeadList,
-            "showAllLeadsFor" to request.showAllLeadsFor,
-            "dataType" to request.dataType,
-            "col" to request.col,
-            "hideColumns" to request.hideColumns,
-            "variant" to request.variant,
-            "ignoreLocale" to request.ignoreLocale,
-            "dateFormat" to request.dateFormat
-    )).responseObject(handler)
+    ) = "/views/c_view_leads"
+            .httpGet(getLeadsParams(request))
+            .responseObject(handler)
 
-    override fun getSessions(
+    override fun getLeadsSync(request: GetLeadsRequest) = "/views/c_view_leads"
+            .httpGet(getLeadsParams(request))
+            .responseObject<GetLeadsResponse>().third.get()
+
+    override fun getSessionsAsync(
             request: GetSessionsRequest,
             handler: (Request, Response, Result<GetSessionsResponse, FuelError>) -> Unit
-    ) = "/leads/sessions".httpGet(listOf("leadId" to request.leadId, "limit" to request.limit)).responseObject(handler)
+    ) = "/leads/sessions"
+            .httpGet(listOf("leadId" to request.leadId, "limit" to request.limit))
+            .responseObject(handler)
+
+    override fun getSessionsSync(request: GetSessionsRequest) = "/leads/sessions"
+            .httpGet(listOf("leadId" to request.leadId, "limit" to request.limit))
+            .responseObject<GetSessionsResponse>().third.get()
+    //endregion
+
+    //region Companion objects
+    companion object {
+        fun getLeadsParams(request: GetLeadsRequest): List<Pair<String, Any?>> = listOf(
+                "apiKey" to request.apiKey,
+                "site" to request.site,
+                "search" to request.search,
+                "limit" to request.limit,
+                "locale" to request.locale,
+                "nextToken" to request.nextToken,
+                "criteriaTextFilter" to request.criteriaTextFilter,
+                "criteriaNumberFilter" to request.criteriaNumberFilter,
+                "criteriaTimeFilter" to request.criteriaTimeFilter,
+                "criteriaFieldFilter" to request.criteriaFieldFilter,
+                "criteriaExitLinkFilter" to request.criteriaExitLinkFilter,
+                "usePresetExclusionList" to request.usePresetExclusionList,
+                "usePresetInclusionList" to request.usePresetInclusionList,
+                "showColumns" to request.showColumns,
+                "email" to request.email,
+                "login" to request.login,
+                "period" to request.period,
+                "noShortenEmail" to request.noShortenEmail,
+                "date" to request.date,
+                "unixTime" to request.unixTime,
+                "sortBy" to request.sortBy,
+                "showLeadList" to request.showLeadList,
+                "showAllLeadsFor" to request.showAllLeadsFor,
+                "dataType" to request.dataType,
+                "col" to request.col,
+                "hideColumns" to request.hideColumns,
+                "variant" to request.variant,
+                "ignoreLocale" to request.ignoreLocale,
+                "dateFormat" to request.dateFormat
+        )
+    }
     //endregion
 }

@@ -16,7 +16,7 @@ import org.junit.Test;
 public class TestDatasetJava extends AbstractJLeadBoxerUnitTest {
     @Test
     public void testCreateDataset() {
-        JLeadBoxerClient.INSTANCE.getDataset().create(
+        JLeadBoxerClient.INSTANCE.getDataset().createAsync(
                 new CreateDatasetRequest("api-key", "user-email"),
                 ResourceClientHelper.INSTANCE.ignoreHandling()
         );
@@ -24,7 +24,7 @@ public class TestDatasetJava extends AbstractJLeadBoxerUnitTest {
 
     @Test
     public void testDeleteDataset() {
-        JLeadBoxerClient.INSTANCE.getDataset().delete(
+        JLeadBoxerClient.INSTANCE.getDataset().deleteAsync(
                 new DeleteDatasetRequest(
                         "dataset-id",
                         "user-email",
