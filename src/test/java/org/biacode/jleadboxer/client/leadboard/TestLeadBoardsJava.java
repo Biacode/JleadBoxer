@@ -24,7 +24,6 @@ public class TestLeadBoardsJava extends AbstractJLeadBoxerUnitTest {
 
 class TestCases {
     public static void main(String[] args) {
-        LeadBoxerCredentials.INSTANCE.setupFuel();
         final GetLeadsResponse getLeadsResponse = JLeadBoxerClient.INSTANCE.getLeadBoard()
                 .getLeads(
                         new GetLeadsRequest.Builder(LeadBoxerCredentials.INSTANCE.getApiKey(), LeadBoxerCredentials.INSTANCE.getDatasetId()).build(),

@@ -6,7 +6,6 @@ import org.biacode.jleadboxer.client.JLeadBoxerClient
 import org.biacode.jleadboxer.model.dataset.*
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials
-import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.setupFuel
 import org.junit.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -29,7 +28,6 @@ class TestKotlinApplication : AbstractJLeadBoxerUnitTest() {
 }
 
 fun main(args: Array<String>) {
-    setupFuel()
     val datasetId = createDataset()
     updateDataset(datasetId)
     deleteDataset(datasetId)
