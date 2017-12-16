@@ -7,10 +7,7 @@ import com.github.kittinunf.fuel.gson.responseObject
 import com.github.kittinunf.fuel.httpGet
 import com.github.kittinunf.result.Result
 import org.biacode.jleadboxer.client.leadboard.LeadBoardResourceClient
-import org.biacode.jleadboxer.model.leadboard.GetLeadsRequest
-import org.biacode.jleadboxer.model.leadboard.GetLeadsResponse
-import org.biacode.jleadboxer.model.leadboard.GetSessionsRequest
-import org.biacode.jleadboxer.model.leadboard.GetSessionsResponse
+import org.biacode.jleadboxer.model.leadboard.*
 
 /**
  * Created by Arthur Asatryan.
@@ -41,6 +38,17 @@ class LeadBoardResourceClientImpl : LeadBoardResourceClient {
     override fun getSessionsSync(request: GetSessionsRequest) = "/leads/sessions"
             .httpGet(listOf("leadId" to request.leadId, "limit" to request.limit))
             .responseObject<GetSessionsResponse>().third.get()
+
+    override fun getEventsAsync(
+            request: GetEventsRequest,
+            handler: (Request, Response, Result<GetEventsResponse, FuelError>) -> Unit
+    ) = "/leads/events"
+            .httpGet(listOf("sessionId" to request.sessionId, "limit" to request.limit))
+            .responseObject(handler)
+
+    override fun getEventsSync(request: GetEventsRequest) = "/leads/events"
+            .httpGet(listOf("sessionId" to request.sessionId, "limit" to request.limit))
+            .responseObject<GetEventsResponse>().third.get()
     //endregion
 
     //region Companion objects

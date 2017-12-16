@@ -4,10 +4,7 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.core.Response
 import com.github.kittinunf.result.Result
-import org.biacode.jleadboxer.model.leadboard.GetLeadsRequest
-import org.biacode.jleadboxer.model.leadboard.GetLeadsResponse
-import org.biacode.jleadboxer.model.leadboard.GetSessionsRequest
-import org.biacode.jleadboxer.model.leadboard.GetSessionsResponse
+import org.biacode.jleadboxer.model.leadboard.*
 
 /**
  * Created by Arthur Asatryan.
@@ -30,4 +27,12 @@ interface LeadBoardResourceClient {
     ): Request
 
     fun getSessionsSync(request: GetSessionsRequest): GetSessionsResponse
+
+    fun getEventsAsync(
+            request: GetEventsRequest,
+            handler: (Request, Response, Result<GetEventsResponse, FuelError>) -> Unit
+            = { _, _, _ -> }
+    ): Request
+
+    fun getEventsSync(request: GetEventsRequest): GetEventsResponse
 }

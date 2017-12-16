@@ -2,6 +2,7 @@ package org.biacode.jleadboxer.client.leadboard
 
 import com.github.kittinunf.result.Result
 import org.biacode.jleadboxer.client.JLeadBoxerClient
+import org.biacode.jleadboxer.model.leadboard.GetEventsRequest
 import org.biacode.jleadboxer.model.leadboard.GetLeadsRequest
 import org.biacode.jleadboxer.model.leadboard.GetSessionsRequest
 import org.biacode.jleadboxer.test.AbstractJLeadBoxerUnitTest
@@ -28,6 +29,7 @@ class TestLeadBoardsKotlin : AbstractJLeadBoxerUnitTest() {
 fun main(args: Array<String>) {
     getLeads()
     getSessions("1505135787782.1263221347")
+    getEvents("1513429739527.1263221347")
 }
 
 private fun getLeads() {
@@ -55,13 +57,32 @@ private fun getSessions(leadId: String) {
             .getSessionsAsync(
                     GetSessionsRequest(leadId),
                     { request, _, result ->
-                        logger.info("getLeads cURL - {}", request.cUrlString())
+                        logger.info("getSessions cURL - {}", request.cUrlString())
                         when (result) {
                             is Result.Failure -> {
-                                logger.error("getLeads - {}", result.error)
+                                logger.error("getSessions - {}", result.error)
                             }
                             is Result.Success -> {
-                                logger.info("getLeads - {}", result.value)
+                                logger.info("getSessions - {}", result.value)
+                            }
+                        }
+                    }
+            )
+}
+
+private fun getEvents(sessionId: String) {
+    JLeadBoxerClient
+            .leadBoard
+            .getEventsAsync(
+                    GetEventsRequest(sessionId),
+                    { request, _, result ->
+                        logger.info("getEvents cURL - {}", request.cUrlString())
+                        when (result) {
+                            is Result.Failure -> {
+                                logger.error("getEvents - {}", result.error)
+                            }
+                            is Result.Success -> {
+                                logger.info("getEvents - {}", result.value)
                             }
                         }
                     }
