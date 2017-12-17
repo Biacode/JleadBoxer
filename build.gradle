@@ -2,7 +2,7 @@ group 'org.biacode.jleadboxer'
 version '0.0.2-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.2.0'
+    ext.kotlin_version = '1.2.10'
     ext.javax_ws_rs_version = '2.1'
     ext.junit_version = '4.12'
     ext.jackson_version = '2.9.2'
