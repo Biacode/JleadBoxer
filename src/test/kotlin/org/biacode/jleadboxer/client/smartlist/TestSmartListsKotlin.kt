@@ -36,13 +36,13 @@ private fun getSmartLists() {
             .getSmartListsAsync(
                     GetSmartListsRequest(AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.apiKey, AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.accountId, AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.userEmail, "17f79b7784354d489deaf1219c390b41"),
                     { request, _, result ->
-                        org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists cURL - {}", request.cUrlString())
+                        logger.info("getSmartLists cURL - {}", request.cUrlString())
                         when (result) {
                             is Result.Failure -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.error("getSmartLists - {}", result.error)
+                                logger.error("getSmartLists - {}", result.error)
                             }
                             is Result.Success -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists - {}", result.value)
+                                logger.info("getSmartLists - {}", result.value)
                             }
                         }
                     }
@@ -60,13 +60,13 @@ private fun createSmartList() {
                             "Test smart list",
                             SmartListType.USER) { dayOfWeek = DayOfWeek.SUNDAY },
                     { request, _, result ->
-                        org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists cURL - {}", request.cUrlString())
+                        logger.info("getSmartLists cURL - {}", request.cUrlString())
                         when (result) {
                             is Result.Failure -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.error("getSmartLists - {}", result.error)
+                                logger.error("getSmartLists - {}", result.error)
                             }
                             is Result.Success -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists - {}", result.value)
+                                logger.info("getSmartLists - {}", result.value)
                             }
                         }
                     }
@@ -83,13 +83,13 @@ private fun updateSmartList() {
                             "14118",
                             dayOfWeek = DayOfWeek.TUESDAY),
                     { request, _, result ->
-                        org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists cURL - {}", request.cUrlString())
+                        logger.info("getSmartLists cURL - {}", request.cUrlString())
                         when (result) {
                             is Result.Failure -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.error("getSmartLists - {}", result.error)
+                                logger.error("getSmartLists - {}", result.error)
                             }
                             is Result.Success -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists - {}", result.value)
+                                logger.info("getSmartLists - {}", result.value)
                             }
                         }
                     }
@@ -104,13 +104,13 @@ private fun deleteSmartList() {
                             AbstractJLeadBoxerUnitTest.LeadBoxerCredentials.userEmail,
                             "14119"),
                     { request, _, result ->
-                        org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists cURL - {}", request.cUrlString())
+                        logger.info("getSmartLists cURL - {}", request.cUrlString())
                         when (result) {
                             is Result.Failure -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.error("getSmartLists - {}", result.error)
+                                logger.error("getSmartLists - {}", result.error)
                             }
                             is Result.Success -> {
-                                org.biacode.jleadboxer.client.leadboard.logger.info("getSmartLists - {}", result.value)
+                                logger.info("getSmartLists - {}", result.value)
                             }
                         }
                     }
